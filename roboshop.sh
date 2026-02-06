@@ -6,7 +6,7 @@ AMI_ID="ami-0220d79f3f480ecf5" # replace with your desired AMI ID
 for insatnce in $@
 
 do
-   instance_id=$( aws ec2 run-instances 
+   instance_id=$( aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type "t3.micro" \
     --security-group-ids $SG_ID \
@@ -26,6 +26,8 @@ do
         --query "Reservations[0].Instances[0].PrivateIpAddress" \
         --output text)
     fi
+
+    echo ="IP address of $insatnce is $IP"
 done
     
 
