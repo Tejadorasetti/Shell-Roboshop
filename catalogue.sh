@@ -2,13 +2,14 @@
 
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/Shell-Roboshop"
-LOGS_FILE="$LOGS_FOLDER/$0.log"
+SCRIPT_NAME=$(basename "$0")
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+LOGS_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-SCRIPT_DIR=$pwd
 MONGODB_HOST=mongodb.learn-devops.cloud
 
 
