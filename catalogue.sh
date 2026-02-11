@@ -93,6 +93,13 @@ VALIDATE $? "copying mongo repo file"
 sudo dnf install mongodb-mongosh -y &>>$LOGS_FILE
 VALIDATE $? "installing mongodb mongosh client"
 
+DB_EXISTS=$(mongosh --host $MONGODB_HOST --quiet --eval "db.adminCommand('listDatabases').databases.some(d => d.name === 'catalogue')" | grep -q "true" && echo "exists" || echo "no")
+if [ "$DB_EXISTS" = "no" ]; then
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
+    VALIDATE $? "loading products data to catalogue database"
+else
+    echo -e "$Y Products already loaded in catalogue database $N" | tee -a $LOGS_FILE
+fi
 
 Index=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
 
