@@ -90,8 +90,8 @@ VALIDATE $? "starting catalogue service"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo file"
 
-dnf install mongodb-monosh -y &>>$LOGS_FILE
-VALIDATE $? "installing mongodb monosh client"
+dnf install mongodb-mongosh -y &>>$LOGS_FILE
+VALIDATE $? "installing mongodb mongosh client"
 
 
 Index=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
