@@ -61,6 +61,9 @@ fi
 cd /app &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
 
+rm -rf /app/* &>>$LOGS_FILE
+VALIDATE $? "cleaning application directory"
+
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
 VALIDATE $? "extracting catalogue code" 
 
