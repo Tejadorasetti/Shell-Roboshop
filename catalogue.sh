@@ -87,7 +87,7 @@ VALIDATE $? "enabling catalogue service"
 systemctl start catalogue &>>$LOGS_FILE
 VALIDATE $? "starting catalogue service"
 
-cp $SCRIPT_DIR/monogo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo file"
 
 
