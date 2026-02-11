@@ -89,8 +89,14 @@ VALIDATE $? "starting catalogue service"
 cp $SCRIPT_DIR/monogo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo file"
 
-mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
-VALIDATE $? "loading master data to mongodb"
 
+Index=(mongosh localhost:27017 --quiet  --eval'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
+if [ $Index -le 0 ]; then
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
+    VALIDATE $? "loading products data to catalogue database"
+else
+    echo -e "$Y Products already loaded in catalogue database $N" | tee -a $LOGS_FILE
+fi
 
-
+systemctl restart catalogue &>>$LOGS_FILE
+VALIDATE $? "restarting catalogue service"
