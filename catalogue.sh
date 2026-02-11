@@ -47,11 +47,17 @@ else
     echo -e "$Y roboshop user already exists, skipping user creation $N" | tee -a $LOGS_FILE
 fi  
 
-mkdir /app &>>$LOGS_FILE
-VALIDATE $? "creating application directory"
+id roboshop &>>$LOGS_FILE
+if [ $? -ne 0 ]; then
+    mkdir /app &>>$LOGS_FILE
+    VALIDATE $? "creating application directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
-VALIDATE $? "downloading catalogue code"
+    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
+    VALIDATE $? "downloading catalogue code"
+else
+    echo -e "$Y roboshop application directory already exists, skipping application directory creation $N" | tee -a $LOGS_FILE
+fi  
+
 
 
 
