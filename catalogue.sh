@@ -1,4 +1,4 @@
-#! bin/bash/
+#! bin/bash
 
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/Shell-Roboshop"
@@ -99,13 +99,6 @@ if [ $Index -le 0 ]; then
 else
     echo -e "$Y Products already loaded in catalogue database $N" | tee -a $LOGS_FILE
 fi
-
-##if [ $Index -le 0 ]; then
-    #mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
-   # VALIDATE $? "loading products data to catalogue database"
-#else
-    #echo -e "$Y Products already loaded in catalogue database $N" | tee -a $LOGS_FILE
-#fi
 
 systemctl restart catalogue &>>$LOGS_FILE
 VALIDATE $? "restarting catalogue service"
