@@ -1,8 +1,8 @@
 #! bin/bash
 
-SG_ID="sg-0625b3a68a66a1e06" # replace with your security group id
+SG_ID="sg-07d144cacb0cc6fcd" # replace with your security group id
 AMI_ID="ami-0220d79f3f480ecf5" # replace with your desired AMI ID
-Zone_ID="Z0040584OWLEELXMLC9V" # replace with your hosted zone ID
+Zone_ID="Z01408401M7EBKIKKXCU2" # replace with your hosted zone ID
 Domain_name="learn-devops.cloud" # replace with your domain name
 
 for insatnce in $@
