@@ -73,6 +73,9 @@ VALIDATE $? "navigating to application directory"
 rm -rf /app/* &>>$LOGS_FILE
 VALIDATE $? "cleaning application directory"
 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
+VALIDATE $? "downloading catalogue code"
+
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
 VALIDATE $? "extracting catalogue code" 
 
