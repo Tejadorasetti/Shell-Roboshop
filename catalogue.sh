@@ -91,7 +91,8 @@ cp $SCRIPT_DIR/monogo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo file"
 
 
-Index=(mongosh localhost:27017 --quiet  --eval'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
+Index=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
+
 if [ $Index -le 0 ]; then
     mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
     VALIDATE $? "loading products data to catalogue database"
