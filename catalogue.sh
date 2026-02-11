@@ -90,7 +90,7 @@ VALIDATE $? "starting catalogue service"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo file"
 
-dnf install mongodb-mongosh -y &>>$LOGS_FILE
+sudo dnf install mongodb-mongosh -y &>>$LOGS_FILE
 VALIDATE $? "installing mongodb mongosh client"
 
 
