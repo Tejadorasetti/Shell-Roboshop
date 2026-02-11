@@ -1,4 +1,4 @@
-#! bin/bash
+#! bin/bash/
 
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/Shell-Roboshop"
@@ -62,6 +62,7 @@ if [ $? -ne 0 ]; then
 else
     echo -e "$Y roboshop application directory already exists, skipping application directory creation $N" | tee -a $LOGS_FILE
 fi  
+
 
 cd /app &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
