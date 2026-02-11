@@ -58,6 +58,27 @@ else
     echo -e "$Y roboshop application directory already exists, skipping application directory creation $N" | tee -a $LOGS_FILE
 fi  
 
+cd /app &>>$LOGS_FILE
+VALIDATE $? "navigating to application directory"
+
+unzip /tmp/catalogue.zip &>>$LOGS_FILE
+VALIDATE $? "extracting catalogue code" 
+
+npm install &>>$LOGS_FILE
+VALIDATE $? "installing catalogue dependencies"
+
+cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
+VALIDATE $? "copying catalogue systemd service file"
+
+systemctl daemon-reload &>>$LOGS_FILE
+VALIDATE $? "reloading systemd daemon"
+
+systemctl enable catalogue &>>$LOGS_FILE
+VALIDATE $? "enabling catalogue service"
+
+systemctl start catalogue &>>$LOGS_FILE
+VALIDATE $? "starting catalogue service"
+
 
 
 
