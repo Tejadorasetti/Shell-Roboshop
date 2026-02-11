@@ -8,6 +8,10 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+SCRIPT_DIR=$pwd
+MONGODB_HOST=mongodb.learn-devops.cloud
+
+
 if [ $USERID -ne 0 ]; then
     echo -e "$R please run this script with root user access $N" | tee -a $LOGS_FILE
     exit 1
@@ -82,6 +86,11 @@ VALIDATE $? "enabling catalogue service"
 systemctl start catalogue &>>$LOGS_FILE
 VALIDATE $? "starting catalogue service"
 
+cp $SCRIPT_DIR/monogo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+VALIDATE $? "copying mongo repo file"
+
+mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
+VALIDATE $? "loading master data to mongodb"
 
 
 
