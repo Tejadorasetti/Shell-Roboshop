@@ -57,8 +57,8 @@ if [ $? -ne 0 ]; then
     mkdir /app &>>$LOGS_FILE
     VALIDATE $? "creating application directory"
 
-    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
-    VALIDATE $? "downloading catalogue code"
+    curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOGS_FILE
+    VALIDATE $? "downloading user code"
 else
     echo -e "$Y roboshop application directory already exists, skipping application directory creation $N" | tee -a $LOGS_FILE
 fi  
@@ -69,39 +69,21 @@ VALIDATE $? "navigating to application directory"
 rm -rf /app/* &>>$LOGS_FILE
 VALIDATE $? "cleaning application directory"
 
-unzip /tmp/catalogue.zip &>>$LOGS_FILE
-VALIDATE $? "extracting catalogue code" 
+unzip /tmp/user.zip &>>$LOGS_FILE
+VALIDATE $? "extracting user code" 
 
 npm install &>>$LOGS_FILE
-VALIDATE $? "installing catalogue dependencies"
+VALIDATE $? "installing user dependencies"
 
-cp "$SCRIPT_DIR/catalogue.service" /etc/systemd/system/catalogue.service &>>$LOGS_FILE
-VALIDATE $? "copying catalogue systemd service file"
+cp "$SCRIPT_DIR/user.service" /etc/systemd/system/user.service &>>$LOGS_FILE
+VALIDATE $? "copying user systemd service file"
 
 systemctl daemon-reload &>>$LOGS_FILE
 VALIDATE $? "reloading systemd daemon"
 
-systemctl enable catalogue &>>$LOGS_FILE
-VALIDATE $? "enabling catalogue service"
+systemctl enable user &>>$LOGS_FILE
+VALIDATE $? "enabling user service"
 
-systemctl start catalogue &>>$LOGS_FILE
-VALIDATE $? "starting catalogue service"
+systemctl start user &>>$LOGS_FILE
+VALIDATE $? "starting user service"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
-VALIDATE $? "copying mongo repo file"
-
-sudo dnf install mongodb-mongosh -y &>>$LOGS_FILE
-VALIDATE $? "installing mongodb mongosh client"
-
-
-Index=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILE
-
-if [ $Index -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOGS_FILE
-    VALIDATE $? "loading products data to catalogue database"
-else
-    echo -e "$Y Products already loaded in catalogue database $N" | tee -a $LOGS_FILE
-fi
-
-systemctl restart catalogue &>>$LOGS_FILE
-VALIDATE $? "restarting catalogue service"
