@@ -64,7 +64,7 @@ else
 fi  
 
 
-cd /app &>>$LOGS_FILE
+cd sudo /app &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
 
 rm -rf /app/* &>>$LOGS_FILE
