@@ -63,12 +63,6 @@ else
     echo -e "$Y roboshop application directory already exists, skipping application directory creation $N" | tee -a $LOGS_FILE
 fi  
 
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOGS_FILE
-VALIDATE $? "downloading user code"
-if [ ! -s /tmp/user.zip ]; then
-    echo -e "$R Empty zip file, download failed $N" | tee -a $LOGS_FILE
-    exit 1
-fi
 
 cd /app &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
@@ -94,4 +88,6 @@ VALIDATE $? "enabling user service"
 
 systemctl start user &>>$LOGS_FILE
 VALIDATE $? "starting user service"
+
+
 
