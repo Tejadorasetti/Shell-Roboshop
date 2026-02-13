@@ -63,10 +63,10 @@ VALIDATE $? "cleaning application directory"
 unzip /tmp/shipping.zip &>>$LOGS_FILE
 VALIDATE $? "extracting shipping code" 
 
-cd /app 
+cd /app &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
 
-mvn clean package 
+mvn clean package  &>>$LOGS_FILE
 VALIDATE $? "building shipping code"
 
 mv target/shipping-1.0.jar shipping.jar &>>$LOGS_FILE
