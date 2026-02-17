@@ -63,7 +63,7 @@ VALIDATE $? "cleaning application directory"
 unzip /tmp/payment.zip &>>$LOGS_FILE
 VALIDATE $? "extracting payment code" 
 
-cd/app &>>$LOGS_FILE
+cd /app* &>>$LOGS_FILE
 VALIDATE $? "navigating to application directory"
 
 pip3 install -r requirements.txt &>>$LOGS_FILE
